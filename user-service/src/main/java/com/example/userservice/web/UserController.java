@@ -5,6 +5,7 @@ import com.example.userservice.service.UserService;
 import com.example.userservice.vo.RequestUser;
 import com.example.userservice.vo.ResponseUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,12 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final Environment env;
 
     @GetMapping("/health_check")
     public String status() {
-        return "Working User service";
+
+        return "Working User service : " + env.getProperty("token.expiration_time");
     }
 
     @PostMapping("/users")

@@ -8,6 +8,6 @@ spring:
     config:
       server:
         git:
-          uri: file://C:\Project\Spring\Project\99. Toy Project\01. Ecommerce
+          uri: https://github.com/tg1218/spring-cloud-ecommerce.git
           search-paths: config
 

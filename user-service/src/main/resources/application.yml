@@ -6,7 +6,7 @@ spring:
     console:
       enabled: false
   application:
-    name: user-serivce
+    name: user-service
   datasource:
     url: jdbc:h2:tcp://localhost/~/ecommerce
     username: sa
@@ -15,7 +15,10 @@ spring:
 
   config:
     import: optional:configserver:http://localhost:8888
-    name: user
+  cloud:
+    config:
+      name: user
+      profile: default
 
   jpa:
     hibernate:
@@ -33,7 +36,3 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
-
-token:
-  expiration_time: 864000000
-  secret: secret-key
