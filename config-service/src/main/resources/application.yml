@@ -1,0 +1,13 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: file://C:\Project\Spring\Project\99. Toy Project\01. Ecommerce
+          search-paths: config
+
