@@ -22,7 +22,6 @@ public class UserController {
 
     @GetMapping("/health_check")
     public String status() {
-
         return "Working User service : " + env.getProperty("token.expiration_time");
     }
 

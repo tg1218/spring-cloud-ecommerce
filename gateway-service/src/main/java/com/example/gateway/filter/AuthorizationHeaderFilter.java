@@ -2,8 +2,10 @@ package com.example.gateway.filter;
 
 import io.jsonwebtoken.Jwts;
 import java.util.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -15,9 +17,11 @@ import reactor.core.publisher.Mono;
 @Component
 public class AuthorizationHeaderFilter extends
     AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
+  private final Environment env;
 
-  public AuthorizationHeaderFilter() {
+  public AuthorizationHeaderFilter(Environment env) {
     super(Config.class);
+    this.env = env;
   }
 
   @Override
@@ -45,7 +49,7 @@ public class AuthorizationHeaderFilter extends
 
     try {
       subject = Jwts.parser()
-          .setSigningKey(Base64.getEncoder().encodeToString("user-service".getBytes()))
+          .setSigningKey(Base64.getEncoder().encodeToString(env.getProperty("token.secret").getBytes()))
           .parseClaimsJws(jwt).getBody()
           .getSubject();
 

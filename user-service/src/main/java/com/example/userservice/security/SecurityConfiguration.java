@@ -4,6 +4,7 @@ import com.example.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -22,14 +23,16 @@ public class SecurityConfiguration {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http,
-      AuthenticationManager authenticationManager, UserService userService) throws Exception {
+      AuthenticationManager authenticationManager, UserService userService, Environment env)
+      throws Exception {
 
     http
         .csrf(CsrfConfigurer::disable)
-        .authorizeHttpRequests((r) ->
-            r.requestMatchers("/actuator/**").permitAll()
-                .requestMatchers("/health_check").permitAll())
-        .addFilter(new AuthenticationFilter(authenticationManager, userService));
+//        .authorizeHttpRequests((r) ->
+//            r.requestMatchers("/actuator/**").permitAll()
+//                .requestMatchers("/health_check").permitAll()
+//                .requestMatchers("/users").permitAll())
+        .addFilter(new AuthenticationFilter(authenticationManager, userService, env));
 //        .formLogin(Customizer.withDefaults());
 
     return http.build();
