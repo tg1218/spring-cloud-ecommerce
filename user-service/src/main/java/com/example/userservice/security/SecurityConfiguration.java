@@ -26,8 +26,9 @@ public class SecurityConfiguration {
 
     http
         .csrf(CsrfConfigurer::disable)
-//        .authorizeHttpRequests((r) ->
-//            r.requestMatchers("192.168.35.13/**").permitAll());
+        .authorizeHttpRequests((r) ->
+            r.requestMatchers("/actuator/**").permitAll()
+                .requestMatchers("/health_check").permitAll())
         .addFilter(new AuthenticationFilter(authenticationManager, userService));
 //        .formLogin(Customizer.withDefaults());
 
