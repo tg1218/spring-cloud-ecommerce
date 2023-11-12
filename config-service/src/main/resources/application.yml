@@ -23,3 +23,6 @@ management:
       exposure:
         include: "*"
         exclude: "env"
+
+encrypt:
+  key: qwertyuiopasdfghjklz123456789
