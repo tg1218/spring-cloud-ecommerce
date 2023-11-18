@@ -25,4 +25,7 @@ management:
         exclude: "env"
 
 encrypt:
-  key: qwertyuiopasdfghjklz123456789
+  key-store:
+    location: file:///C:/Project/Spring/Project/99. Toy Project/00. Ecommerce/key/apiEncryptionKey.jks
+    password: 123456789
+    alias: apiEncryptionKey
