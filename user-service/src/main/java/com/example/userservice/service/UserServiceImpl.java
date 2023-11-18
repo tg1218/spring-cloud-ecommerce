@@ -1,6 +1,7 @@
 package com.example.userservice.service;
 
 
+import com.example.userservice.client.OrderServiceClient;
 import com.example.userservice.dto.OrderDto;
 import com.example.userservice.dto.UserDto;
 import com.example.userservice.jpa.UserEntity;
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService {
   private final PasswordEncoder passwordEncoder;
   private final RestTemplate restTemplate;
   private final Environment env;
+  private final OrderServiceClient orderServiceClient;
 
   @Override
   @Transactional
@@ -51,12 +53,14 @@ public class UserServiceImpl implements UserService {
       throw new UsernameNotFoundException("User Not Found");
     }
 
-    String orderURL = String.format(env.getProperty("order-service.url"), user.getUserId());
-    List<ResponseOrder> userOrders = restTemplate.exchange(orderURL, HttpMethod.GET,
-        null, new ParameterizedTypeReference<List<ResponseOrder>>() {
-        }).getBody();
-
     UserDto userDto = user.toUserDto();
+
+//    String orderURL = String.format(env.getProperty("order-service.url"), user.getUserId());
+//    List<ResponseOrder> userOrders = restTemplate.exchange(orderURL, HttpMethod.GET,
+//        null, new ParameterizedTypeReference<List<ResponseOrder>>() {
+//        }).getBody();
+
+    List<ResponseOrder> userOrders = orderServiceClient.getOrders(userId);
 
     if(userOrders != null && (long) userOrders.size() > 0){
       userDto.setOrders(userOrders.stream().map(
