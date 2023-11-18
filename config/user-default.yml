@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:h2:tcp://localhost/~/ecommer
     username: sa
-    password: '{cipher}a631dee525184bf65c7ea8aa255e1cb264494775c3617df27cd0df0ccaeba45c'
+    password: '{cipher}AYC94kGbPI3aKzVT9Rsh8VY4EDYpO6RUqwVPI2ASJuY7rXfxEVC1KquGJ3oKd6hkgZUQ73Ctz6ABuEjaNBR/yQgy6tiOk9JbupumDePluru6Fo5S62wr980Jo6u1v3R5E/Q9wx3GC8gdhaa9/bpOwvaI0wWuCGijEI9xphJwgadGCZlv2Ma1r/SmUY6judg6c0IFcW39mPvgM+sC/hO76r4PUNYpGnPdXIJM2JFzGtj7DIJg9tvsgQnzoF59Lt9xcy3g9vKqibBBCr68CNNQK0bVPWK2NNY2PvDSOH3lIQcPHzzFg0XBYwSljvH9o6jS7VpA4lBNCpu/usc38+CCX3YwrxVOTIEqAhbNYRJfBpx7ur1taLPa85d+thwszPTMdxIFeFMgNmCsDO++48Kj5rRPm0VY/hRCqJac/xmXm7NYuUGdeH1oqBVv2NNtwV1gW4qfIKNMOnj7bxy5WgurZe7sYhFuc+vmEaZSnx2IulxXS3asTAdQZnTKx2kMr+IEUn4QXi8X5TVbWhOWdGiqfDxyxCiHZUV6xZn6dWvp/jG9Yw=='
     driver-class-name: org.h2.Driver
 
 token:
