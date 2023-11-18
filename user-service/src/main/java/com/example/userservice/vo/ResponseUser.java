@@ -18,5 +18,6 @@ public class ResponseUser {
         this.email = userDto.getEmail();
         this.userId = userDto.getUserId();
         this.name = userDto.getName();
+        this.orders = userDto.getOrders().stream().map(ResponseOrder::of).toList();
     }
 }

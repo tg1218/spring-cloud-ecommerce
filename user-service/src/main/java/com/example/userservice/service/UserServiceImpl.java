@@ -1,19 +1,25 @@
 package com.example.userservice.service;
 
 
+import com.example.userservice.dto.OrderDto;
 import com.example.userservice.dto.UserDto;
 import com.example.userservice.jpa.UserEntity;
 import com.example.userservice.jpa.UserRepository;
+import com.example.userservice.vo.ResponseOrder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,6 +28,8 @@ public class UserServiceImpl implements UserService {
 
   private final UserRepository repository;
   private final PasswordEncoder passwordEncoder;
+  private final RestTemplate restTemplate;
+  private final Environment env;
 
   @Override
   @Transactional
@@ -43,7 +51,20 @@ public class UserServiceImpl implements UserService {
       throw new UsernameNotFoundException("User Not Found");
     }
 
-    return user.toUserDto();
+    String orderURL = String.format(env.getProperty("order-service.url"), user.getUserId());
+    List<ResponseOrder> userOrders = restTemplate.exchange(orderURL, HttpMethod.GET,
+        null, new ParameterizedTypeReference<List<ResponseOrder>>() {
+        }).getBody();
+
+    UserDto userDto = user.toUserDto();
+
+    if(userOrders != null && (long) userOrders.size() > 0){
+      userDto.setOrders(userOrders.stream().map(
+          or -> new OrderDto(or.getProductId(), or.getQty(), or.getUnitPrice(), or.getTotalPrice(),
+              or.getCreatedAt())).toList());
+    }
+
+    return userDto;
   }
 
   @Override
