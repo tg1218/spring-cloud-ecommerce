@@ -3,6 +3,7 @@ package com.example.orderservice.service;
 import com.example.orderservice.dto.OrderDto;
 import com.example.orderservice.jpa.OrderEntity;
 import com.example.orderservice.jpa.OrderRepository;
+import com.example.orderservice.messageQueue.OrderProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +15,14 @@ import java.util.UUID;
 public class OrderServiceImpl implements OrderService{
 
     private final OrderRepository repository;
+    private final OrderProducerService orderProducerService;
 
     @Override
     public OrderDto createOrder(OrderDto orderDetails) {
         orderDetails.setOrderId(UUID.randomUUID().toString());
         orderDetails.setTotalPrice(orderDetails.getQty() * orderDetails.getUnitPrice());
 
-        OrderEntity orderEntity = OrderEntity.of(orderDetails);
-
-        repository.save(orderEntity);
+        orderProducerService.send("orders", orderDetails);
 
         return orderDetails;
     }

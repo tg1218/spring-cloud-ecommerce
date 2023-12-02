@@ -14,7 +14,6 @@ public class ResponseOrder {
     private Integer unitPrice;
     private Integer totalPrice;
     private String orderId;
-    private LocalDate createdAt;
 
     public ResponseOrder(OrderDto orderDto) {
         this.productId = orderDto.getProductId();
@@ -22,6 +21,5 @@ public class ResponseOrder {
         this.unitPrice = orderDto.getUnitPrice();
         this.totalPrice = orderDto.getTotalPrice();
         this.orderId = orderDto.getOrderId();
-        this.createdAt = orderDto.getCreatedAt();
     }
 }

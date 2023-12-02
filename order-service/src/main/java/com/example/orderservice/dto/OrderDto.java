@@ -1,9 +1,6 @@
 package com.example.orderservice.dto;
 
-import jakarta.persistence.Column;
 import lombok.Data;
-
-import java.time.LocalDate;
 
 @Data
 public class OrderDto {
@@ -13,5 +10,4 @@ public class OrderDto {
     private Integer totalPrice;
     private String userId;
     private String orderId;
-    private LocalDate createdAt;
 }

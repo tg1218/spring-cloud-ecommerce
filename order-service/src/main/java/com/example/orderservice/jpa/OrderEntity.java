@@ -53,7 +53,6 @@ public class OrderEntity {
         orderDto.setUnitPrice(unitPrice);
         orderDto.setTotalPrice(totalPrice);
         orderDto.setOrderId(orderId);
-        orderDto.setCreatedAt(createdAt);
 
         return orderDto;
     }
